@@ -1,0 +1,97 @@
+﻿@page
+@model AS_Assigment2.Pages.RegisterModel
+@{
+    ViewData["Title"] = "Registration";
+}
+
+<h2>Registration Form</h2>
+
+<form method="post" enctype="multipart/form-data">
+    
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="form-group">
+        <label asp-for="Register.FullName"></label>
+        <input asp-for="Register.FullName" class="form-control" />
+        <span asp-validation-for="Register.FullName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Register.CreditCardNo"></label>
+        <input asp-for="Register.CreditCardNo" class="form-control" />
+        <span asp-validation-for="Register.CreditCardNo" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Register.Gender"></label>
+        <select asp-for="Register.Gender" class="form-control">
+            <option value="">Select Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+        </select>
+        <span asp-validation-for="Register.Gender" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Register.MobileNo"></label>
+        <input asp-for="Register.MobileNo" class="form-control" />
+        <span asp-validation-for="Register.MobileNo" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Register.DeliveryAddress"></label>
+        <input asp-for="Register.DeliveryAddress" class="form-control" />
+        <span asp-validation-for="Register.DeliveryAddress" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Register.Email"></label>
+        <input asp-for="Register.Email" class="form-control" />
+        <span asp-validation-for="Register.Email" class="text-danger"></span>
+    </div>
+
+    <!-- Password Input with Real-time Strength Feedback -->
+    <div class="form-group">
+        <label asp-for="Register.Password"></label>
+        <input asp-for="Register.Password" type="password" class="form-control" id="passwordInput" onkeyup="checkPasswordStrength()" />
+        <span asp-validation-for="Register.Password" class="text-danger"></span>
+        <div id="passwordFeedback" style="font-weight: bold;"></div>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Register.ConfirmPassword"></label>
+        <input asp-for="Register.ConfirmPassword" type="password" class="form-control" />
+        <span asp-validation-for="Register.ConfirmPassword" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Register.AboutMe"></label>
+        <textarea asp-for="Register.AboutMe" class="form-control"></textarea>
+        <span asp-validation-for="Register.AboutMe" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Register</button>
+</form>
+
+<!-- JavaScript for Real-Time Password Strength Check -->
+<script>
+    function checkPasswordStrength() {
+        let password = document.getElementById("passwordInput").value;
+        let feedback = document.getElementById("passwordFeedback");
+
+        let strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!#\$%\^&\*])(?=.{12,})");
+        let mediumRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.{8,})");
+
+        if (strongRegex.test(password)) {
+            feedback.textContent = "Strong ✅";
+            feedback.style.color = "green";
+        } else if (mediumRegex.test(password)) {
+            feedback.textContent = "Moderate ⚠️";
+            feedback.style.color = "orange";
+        } else {
+            feedback.textContent = "Weak ❌";
+            feedback.style.color = "red";
+        }
+    }
+</script>

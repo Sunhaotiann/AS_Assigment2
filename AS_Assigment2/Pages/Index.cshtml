@@ -1,0 +1,42 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        <p>Hello, <strong>@User.Identity.Name</strong>!</p>
+
+        <ul>
+            <li><strong>Email:</strong> @User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Email)?.Value</li>
+            <li><strong>Role:</strong> @(User.IsInRole("Admin") ? "Admin" : "User")</li>
+        </ul>
+
+        @if (Model.LoggedInUser != null)
+        {
+            <h3>Your Profile Information</h3>
+            <ul>
+                <li><strong>Full Name:</strong> @Model.LoggedInUser.FullName</li>
+                <li><strong>Credit Card Number:</strong> @Model.LoggedInUser.CreditCardNo</li>
+                <li><strong>Gender:</strong> @Model.LoggedInUser.Gender</li>
+                <li><strong>Mobile Number:</strong> @Model.LoggedInUser.MobileNo</li>
+                <li><strong>Delivery Address:</strong> @Model.LoggedInUser.DeliveryAddress</li>
+                <li><strong>About Me:</strong> @Model.LoggedInUser.AboutMe</li>
+            </ul>
+        }
+        else
+        {
+            <p>No additional user data found.</p>
+        }
+
+        <a asp-page="/Logout" class="btn btn-danger">Logout</a>
+    }
+    else
+    {
+        <p>Please <a asp-page="/Login">Login</a> to see your information.</p>
+    }
+</div>
