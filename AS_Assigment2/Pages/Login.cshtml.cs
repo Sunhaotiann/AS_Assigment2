@@ -63,7 +63,7 @@ namespace AS_Assigment2.Pages
 
             if (await _userManager.IsLockedOutAsync(user))
             {
-                ModelState.AddModelError("", "Your account is locked due to multiple failed attempts. Try again later.");
+                ModelState.AddModelError("", "Your account is locked due to multiple failed login attempts. Please try again after 5 minutes.");
                 return Page();
             }
 
@@ -85,11 +85,18 @@ namespace AS_Assigment2.Pages
                 TempData["SuccessMessage"] = "Login successful! Welcome back.";
                 return RedirectToPage("/Index");
             }
-
-            ModelState.AddModelError("", "Invalid email or password.");
-            LogUserActivity(LModel.Email, "Failed Login Attempt");
-
-            return Page();
+            else if (result.IsLockedOut)
+            {
+                _logger.LogWarning("User account locked out: {Email}", LModel.Email);
+                ModelState.AddModelError("", "Your account is locked. Please try again after 5 minutes.");
+                return Page();
+            }
+            else
+            {
+                ModelState.AddModelError("", "Invalid email or password.");
+                LogUserActivity(LModel.Email, "Failed Login Attempt");
+                return Page();
+            }
         }
 
         private void LogUserActivity(string email, string activity)

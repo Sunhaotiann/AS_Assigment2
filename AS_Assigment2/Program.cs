@@ -30,6 +30,11 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
     options.Password.RequireUppercase = true;
     options.Password.RequireNonAlphanumeric = false;
     options.Password.RequiredLength = 8;
+
+    // Lockout settings
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5); // Lockout duration
+    options.Lockout.MaxFailedAccessAttempts = 3; // Max failed attempts before lockout
+    options.Lockout.AllowedForNewUsers = true; // Lockout applies to new users
 })
     .AddEntityFrameworkStores<AuthDbContext>()
     .AddDefaultTokenProviders();
@@ -47,7 +52,6 @@ builder.Services.ConfigureApplicationCookie(options =>
 // Add services to the container
 builder.Services.AddRazorPages();
 var app = builder.Build();
-
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

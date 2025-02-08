@@ -18,7 +18,7 @@ namespace AS_Assigment2.Model
         {
             base.OnModelCreating(builder);
 
-            // Customize if needed
+            // Additional configurations if needed
         }
     }
 }
