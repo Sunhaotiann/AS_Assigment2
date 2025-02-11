@@ -18,7 +18,7 @@ namespace AS_Assigment2.Model
         {
             base.OnModelCreating(builder);
 
-            // Additional configurations if needed
+            // No additional properties or configurations are required for IdentityUser
         }
     }
 }

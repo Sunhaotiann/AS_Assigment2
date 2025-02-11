@@ -2,16 +2,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using AS_Assigment2.Model;
 using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Builder;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Configure database connection (Ensure connection string is set in appsettings.json)
 builder.Services.AddDbContext<AuthDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("AuthConnectionString")));
-
-builder.Services.AddHttpClient(); // Required for Google reCAPTCHA API 
 
 // Add session services
 builder.Services.AddDistributedMemoryCache();
@@ -70,3 +66,4 @@ app.UseSession();
 
 app.MapRazorPages();
 app.Run();
+// testing
