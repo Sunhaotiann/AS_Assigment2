@@ -1,3 +1,5 @@
+using AS_Assigment2.ViewModels;
+using AS_Assigment2.Model;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -38,6 +40,11 @@ namespace AS_Assigment2.Pages
                 TempData["ErrorMessage"] = "User not found.";
                 return RedirectToPage("/Login");
             }
+
+            // Sanitize input to prevent XSS attacks
+            ChangePasswordInput.CurrentPassword = SanitizeInput(ChangePasswordInput.CurrentPassword);
+            ChangePasswordInput.NewPassword = SanitizeInput(ChangePasswordInput.NewPassword);
+            ChangePasswordInput.ConfirmPassword = SanitizeInput(ChangePasswordInput.ConfirmPassword);
 
             // Validate new password is not the same as the current password
             var isSamePassword = await _userManager.CheckPasswordAsync(user, ChangePasswordInput.NewPassword);
@@ -93,6 +100,12 @@ namespace AS_Assigment2.Pages
                 >= 3 => "Moderate",
                 _ => "Weak"
             };
+        }
+
+        private string SanitizeInput(string input)
+        {
+            if (string.IsNullOrEmpty(input)) return input;
+            return System.Web.HttpUtility.HtmlEncode(input);
         }
     }
 
