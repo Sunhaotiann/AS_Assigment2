@@ -21,6 +21,7 @@ namespace AS_Assigment2.Pages
         private readonly ILogger<LoginModel> _logger;
         private readonly AuthDbContext _context;
 
+
         [TempData]
         public string SuccessMessage { get; set; }
 

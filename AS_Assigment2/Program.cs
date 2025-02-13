@@ -45,6 +45,9 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.SlidingExpiration = true;
 });
 
+
+
+
 // Add services to the container
 builder.Services.AddRazorPages();
 var app = builder.Build();
