@@ -53,7 +53,8 @@ namespace AS_Assigment2.Pages
                     Request.Scheme);
 
                 // Log the generated reset link for debugging purposes
-                _logger.LogInformation("Generated reset link for email {Email}: {ResetLink}", Email, resetLink);
+                _logger.LogInformation("Password reset process initiated for email {Email}.", Email);
+
 
                 // Send email
                 await EmailHelper.SendEmailAsync(

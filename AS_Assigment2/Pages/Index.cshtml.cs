@@ -49,7 +49,7 @@ namespace AS_Assigment2.Pages
             var lastActivity = HttpContext.Session.GetString("LastActivityTime");
             if (lastActivity != null && DateTime.TryParse(lastActivity, out DateTime lastActivityTime))
             {
-                var sessionTimeout = TimeSpan.FromMinutes(30); // Set session timeout duration
+                var sessionTimeout = TimeSpan.FromSeconds(10); // Set session timeout duration
 
                 if (DateTime.Now - lastActivityTime > sessionTimeout)
                 {

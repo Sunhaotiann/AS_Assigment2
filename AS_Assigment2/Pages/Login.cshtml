@@ -25,16 +25,21 @@
                     <span asp-validation-for="LModel.Email" class="text-danger"></span>
                 </div>
 
+                <!-- Password Input with Hide/Unhide Toggle -->
                 <div class="mb-3">
                     <label class="form-label" asp-for="LModel.Password">Password</label>
-                    <input type="password" asp-for="LModel.Password" class="form-control" />
+                    <div class="input-group">
+                        <input type="password" asp-for="LModel.Password" class="form-control" id="passwordInput" />
+                        <button type="button" class="btn btn-outline-secondary" id="togglePassword" onclick="togglePasswordVisibility('passwordInput', 'togglePassword')">
+                            Show
+                        </button>
+                    </div>
                     <span asp-validation-for="LModel.Password" class="text-danger"></span>
                 </div>
 
                 <div class="mb-3">
                     <button type="submit" class="btn btn-primary">Login</button>
                     <a asp-page="/ForgotPassword" class="btn btn-link">Forgot your password?</a>
-
                 </div>
             </form>
         </div>
@@ -42,5 +47,19 @@
 </div>
 
 @section Scripts {
+    <script>
+        function togglePasswordVisibility(inputId, toggleButtonId) {
+            const inputField = document.getElementById(inputId);
+            const toggleButton = document.getElementById(toggleButtonId);
+
+            if (inputField.type === "password") {
+                inputField.type = "text";
+                toggleButton.textContent = "Hide";
+            } else {
+                inputField.type = "password";
+                toggleButton.textContent = "Show";
+            }
+        }
+    </script>
     <partial name="_ValidationScriptsPartial" />
 }

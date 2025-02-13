@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configure database connection (Ensure connection string is set in appsettings.json)
+// Configure database connection
 builder.Services.AddDbContext<AuthDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("AuthConnectionString")));
 
@@ -13,7 +13,7 @@ builder.Services.AddDbContext<AuthDbContext>(options =>
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromMinutes(30); // Set session timeout to 30 minutes
+    options.IdleTimeout = TimeSpan.FromSeconds(10); // Set session timeout to 10 seconds
     options.Cookie.HttpOnly = true; // Secure session cookie
     options.Cookie.IsEssential = true; // Ensure session cookie is always sent
 });
@@ -45,11 +45,9 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.SlidingExpiration = true;
 });
 
-
-
-
 // Add services to the container
 builder.Services.AddRazorPages();
+
 var app = builder.Build();
 
 app.UseHttpsRedirection();
@@ -69,4 +67,3 @@ app.UseSession();
 
 app.MapRazorPages();
 app.Run();
-// testing

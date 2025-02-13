@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace AS_Assigment2.Pages
@@ -43,6 +44,13 @@ namespace AS_Assigment2.Pages
                 return Page();
             }
 
+            var passwordStrength = GetPasswordStrength(NewPassword);
+            if (passwordStrength == "Weak")
+            {
+                ModelState.AddModelError("NewPassword", "Your password is too weak. Try adding more characters, numbers, uppercase, and special symbols.");
+                return Page();
+            }
+
             var user = await _userManager.FindByIdAsync(UserId);
             if (user == null)
             {
@@ -63,6 +71,24 @@ namespace AS_Assigment2.Pages
             }
 
             return Page();
+        }
+
+        private string GetPasswordStrength(string password)
+        {
+            int score = 0;
+
+            if (password.Length >= 12) score++;
+            if (Regex.IsMatch(password, @"[A-Z]")) score++;
+            if (Regex.IsMatch(password, @"[a-z]")) score++;
+            if (Regex.IsMatch(password, @"\d")) score++;
+            if (Regex.IsMatch(password, @"[\W_]")) score++;
+
+            return score switch
+            {
+                >= 5 => "Strong",
+                >= 3 => "Moderate",
+                _ => "Weak"
+            };
         }
     }
 }
